@@ -23,7 +23,7 @@ This code says that if we have the attribute
 ```py
 users[session['user']['username']]['seeTemplate']
 ```
-then we can render the strings, which leads a SSTI (Server Side Template Injeection).
+then we can render the strings, which leads to a SSTI (Server Side Template Injeection).
 
 Unfortunately, the default value for seeTemplate is False for a new user.
 ```py
@@ -33,7 +33,7 @@ def create(self, username, password):
     self.users[username]= {'password': hashlib.sha256(password.encode()).hexdigest(), 'restricted': True, 'seeTemplate': False}
     return 1
 ```
-And only the admin user has is enabled.
+And only the admin user has it enabled.
 
 ```py
 def __init__(self):
@@ -66,7 +66,7 @@ article.set("hello", "hi")
 # article.hello = hi
 ```
 
-With this, we cans do prototype pollution.
+With this, we can do prototype pollution.
 
 Let's exploit it to change the secret flask token.
 
@@ -77,7 +77,7 @@ __class__.__init__.__globals__.__loader__.__init__.__globals__.sys.modules.__mai
 ```
 We can set the token to `hehe` for example.
 
-Then, we only have to put the same payload in local, and login with admin, so that we can retreive the signed cookie with the key we choosed (here it's "hehe").
+Then, we only have to put the same payload in local, set a password that we want for admin, and login with admin, so that we can retreive the signed cookie with the key we choosed (here it's "hehe").
 
 This gives the cookie 
 ```
